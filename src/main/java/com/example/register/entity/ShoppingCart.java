@@ -39,6 +39,40 @@ public class ShoppingCart {
         items.put(product.getId(), cartItem);
         return true;
     }
+    public boolean sub(Product product, int quantity) {
+        CartItem cartItem = null;
+        if (items.containsKey(product.getId())){
+            cartItem = items.get(product.getId());
+            int updateQuantity = cartItem.getQuantity() - quantity;
+            if (updateQuantity <= 0) {
+                items.remove(product.getId());
+            }else {
+                cartItem.setQuantity(updateQuantity);
+            }
+        }
+        return true;
+    }
+
+    public boolean remove(int productId) {
+        if (items.containsKey(productId)) {
+            items.remove(productId);
+            return true;
+        }
+        return false;
+    }
+
+    public void clear() { items.clear();}
+    public double getTotalPrice() {
+        if (items.size() == 0) {
+            return 0;
+        }
+        totalPrice = 0;
+        for (CartItem item :
+        getListItems()) {
+            totalPrice += item.getUnitPrice() * item.getQuantity();
+        }
+        return totalPrice;
+    }
 }
 
 
